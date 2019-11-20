@@ -35,7 +35,7 @@ class LoginForm extends Component {
           onChange={e => this.setState({ password: e.target.value })}
         />
         <Link to={'/userfeed'}><Button content='Login' onClick={e => this.LoginHandler(e)} primary /></Link>
-        <Link to={'/login'} ><Button color='blue' >Sign Up</Button></Link>
+        <Link to={'/signup'} ><Button color='blue' >Sign Up</Button></Link>
       </Form>
     </Grid.Column>
   )
