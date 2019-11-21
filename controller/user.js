@@ -1,4 +1,4 @@
-const User = require('../models/UserSchema');
+const User = require('../models/User');
 
 module.exports = (app) => {
     /*
@@ -6,12 +6,8 @@ module.exports = (app) => {
      */
     app.post('/user/signup', (req, res, next) => {
       const { body } = req;
-      const {
-        password
-      } = body;
-      let {
-        email
-      } = body;
+      const {password} = body;
+      let {email} = body;
       
       if (!email) {
         return res.send({
@@ -46,6 +42,10 @@ module.exports = (app) => {
         }
         // Save the new user
         const newUser = new User();
+        newUser.firstName = firstName,
+        newUser.lastName = lastName,
+        newUser.gender = gender,
+        newUser.userName = userName,
         newUser.email = email;
         newUser.password = newUser.generateHash(password);
         newUser.save((err, user) => {
@@ -57,7 +57,8 @@ module.exports = (app) => {
           }
           return res.send({
             success: true,
-            message: 'Signed up'
+            message: 'Signed up',
+            newUser,
           });
         });
       });

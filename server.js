@@ -6,10 +6,10 @@ const db = require("./controller/connectDb");
 const login = require("./controller/login");
 const insert = require("./controller/insert");
 const verify = require("./controller/verify");
-const user = require("./models/UserSchema");
+const user = require("./models/User");
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 //middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
@@ -45,6 +45,66 @@ app.get("/user/retrieve", (req, res) => {
         return res.send({ data });
     });
 });
+
+app.post('/user/signup', (req, res, next) => {
+    console.log("signup")
+    const { body } = req;
+    const { password } = body;
+    let { email } = body;
+
+    if (!email) {
+        return res.send({
+            success: false,
+            message: 'Error: Email cannot be blank.'
+        });
+    }
+    if (!password) {
+        return res.send({
+            success: false,
+            message: 'Error: Password cannot be blank.'
+        });
+    }
+    email = email.toLowerCase();
+    email = email.trim();
+    // Steps:
+    // 1. Verify email doesn't exist
+    // 2. Save
+    user.find({
+        email: email
+    }, (err, previousUsers) => {
+        if (err) {
+            return res.send({
+                success: false,
+                message: 'Error: Server error'
+            });
+        } else if (previousUsers.length > 0) {
+            return res.send({
+                success: false,
+                message: 'Error: Account already exist.'
+            });
+        }
+        // Save the new user
+        const newUser = new user({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            gender: req.body.gender,
+            userName: req.body.userName,
+            email: req.body.email,
+            password: password,
+        });
+        newUser
+            .save()
+            .then(() => {
+                console.log("New user added to database",newUser);
+                res.json(newUser)
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+                response.status(400).json({ message: error });
+            });
+    });
+}); // end of sign up endpoint
+
 
 app.post("/user/create", (req, res) => {
     const data = new user({
