@@ -49,8 +49,8 @@ app.get("/user/retrieve", (req, res) => {
 app.post('/user/signup', (req, res, next) => {
     console.log("signup")
     const { body } = req;
-    const { password } = body;
-    let { email } = body;
+    const { password } = body.password;
+    let { email } = body.email;
 
     if (!email) {
         return res.send({
@@ -83,7 +83,7 @@ app.post('/user/signup', (req, res, next) => {
                 message: 'Error: Account already exist.'
             });
         }
-        // Save the new user
+        //     // Save the new user
         const newUser = new user({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -95,15 +95,15 @@ app.post('/user/signup', (req, res, next) => {
         newUser
             .save()
             .then(() => {
-                console.log("New user added to database",newUser);
+                console.log("New user added to database", newUser);
                 res.json(newUser)
             })
             .catch(error => {
                 console.log("Error: ", error);
-                response.status(400).json({ message: error });
+                res.status(400).json({ message: error });
             });
-    });
-}); // end of sign up endpoint
+        });
+    }); // end of sign up endpoint
 
 
 app.post("/user/create", (req, res) => {
@@ -120,7 +120,6 @@ app.post("/user/create", (req, res) => {
         return res.send({ data });
     });
 });
-
 app.post("/user/update/:id", (req, res) => {
     console.log(req.body);
     user.findByIdAndUpdate(
@@ -133,11 +132,9 @@ app.post("/user/update/:id", (req, res) => {
         }
     );
 });
-
 app.post('/user/delete/:id', (req, res) => {
     user.findByIdAndRemove(req.params.id, (err, data) => {
         if (err) return res.status(404).send({ error: err.message });
         return res.send({ message: 'Service is successfully deleted!', data })
     })
 })
-

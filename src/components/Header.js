@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../App.css'
-import { Button, Card,  } from 'semantic-ui-react'
+import { Button, } from 'semantic-ui-react'
 import { BrowserRouter as Link } from 'react-router-dom';
 
 class Header extends Component {

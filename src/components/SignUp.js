@@ -3,20 +3,20 @@ import '../App.css'
 import { Button, Form, Grid } from 'semantic-ui-react'
 import LoginForm from './LoginForm';
 import Header from './Header'
-import axios from "axios";
-import swal from 'sweetalert';
+import {addUser} from "./helper";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fname: "",
-      lname: '',
-      gender: '',
-      email: '',
-      password: '',
-      username: '',
+      fname: "an",
+      lname: 'an',
+      gender: 'an',
+      email: 'an',
+      username: 'an',
+      password: 'an',
       verifypass: '',
       sign: false,
       signUpError: '',
@@ -28,18 +28,31 @@ class SignUp extends Component {
   onSubmit = event => {
     event.preventDefault();
     const newUser = {
-      fname: this.state.fname,
-      lname: this.state.lname,
+      firstName: this.state.fname,
+      lastName: this.state.lname,
       gender: this.state.gender,
+      userName: this.state.username,
       email: this.state.email,
-      username: this.state.username,
       password: this.state.password
     };
-    axios.post("http://localhost:4000/user/signup", newUser).then(response => {
+    addUser(newUser).then(response => {
       console.log("New user added", response.data );
+      // this.$emit('addUser', response.data);
       this.setState({ fname: "",username: "", lname: '', gender: '',email: '',password: ''});
-    });
+    })
+    .catch(err => alert(err.error))
   };
+
+  signupHandler = (e)=>{
+    e.preventDefault();
+    const {password , verifypass}=this.state
+    if(password === verifypass){
+      this.setState({sign:true})
+    }else{
+      this.setState({sign:false})
+    }
+
+  }
 
   SignUpForm = () => (
     <Grid.Column>
@@ -82,8 +95,8 @@ class SignUp extends Component {
           iconPosition='left'
           label='Email'
           type='email'
-
-          onChange={this.onTextboxChangeSignUpEmail}
+          value={this.state.email}
+          onChange={e => this.setState({ email: e.target.value })}
           required
 
         />
@@ -92,8 +105,8 @@ class SignUp extends Component {
           iconPosition='left'
           label='Password'
           type='password'
-          
-          onChange={this.onTextboxChangeSignUpPassword}
+          value={this.state.password}
+          onChange={e => this.setState({ password: e.target.value })}
           required
         />
         <Form.Input
@@ -141,6 +154,7 @@ class SignUp extends Component {
                 ) : (null)
               }
               <this.SignUpForm />
+              {this.state.email}
             </div>
           </div>
         );

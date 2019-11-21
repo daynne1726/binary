@@ -7,6 +7,7 @@
     "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.12",
+    "nodemon": "^2.0.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-responsive": "^8.0.1",

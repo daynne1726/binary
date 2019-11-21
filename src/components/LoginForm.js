@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { Button, Form, Grid, Card} from 'semantic-ui-react'
-import swal from 'sweetalert';
+
 import { Link } from 'react-router-dom';
 import UserFeed from './UserFeed';
 import Header from './Header';
@@ -27,7 +27,6 @@ class LoginForm extends Component {
             icon='user'
             iconPosition='left'
             label='Username/Email'
-            placeholder='Username/Email'
             onChange={e => this.setState({ username: e.target.value })}
           />
           <Form.Input
@@ -52,8 +51,6 @@ class LoginForm extends Component {
     }
     else {
       this.setState({ login: false })
-
-
     }
   }
 
