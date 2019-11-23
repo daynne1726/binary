@@ -11,13 +11,13 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fname: "sdf",
-      lname: 'sdf',
-      gender: 'fdg',
-      email: 'sdf',
-      username: 'sdf',
-      password: 'dfg',
-      verifypass: 'df',
+      fname: "",
+      lname: '',
+      gender: '',
+      email: '',
+      username: '',
+      password: '',
+      verifypass: '',
       sign: false,
     }
   }
@@ -27,7 +27,7 @@ class SignUp extends Component {
       firstName: this.state.fname,
       lastName: this.state.lname,
       gender: this.state.gender,
-      username: this.state.username,
+      userName: this.state.username,
       email: this.state.email,
       password: this.state.password,
       signUpDate: new Date()
