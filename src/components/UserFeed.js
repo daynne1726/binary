@@ -87,9 +87,9 @@ CardExampleGroups = () => (
 
     render() {
         return (
-            <div className="containeruser">
+            <div>
             <HeaderMain/>
-                <this.CardExampleGroups/>
+            <this.CardExampleGroups/>
             
             </div>
         )

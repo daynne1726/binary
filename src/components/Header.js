@@ -1,33 +1,49 @@
 import React, { Component } from 'react'
 import '../App.css'
-import { Button, } from 'semantic-ui-react'
+import { Button, Header } from 'semantic-ui-react'
+import { Dropdown, Menu } from 'semantic-ui-react'
 import { BrowserRouter as Link } from 'react-router-dom';
-import { Header, Segment } from 'semantic-ui-react'
+
+
+
+
 
 
 class HeaderMain extends Component {
+  constructor() {
+    super();
+    this.state = {
+     
+    };
+  }
 
-
-HeaderExampleAttached = () => (
+  HeaderExampleAttached = () => (
     <Header as='h2' attached='top'>
-      <div className = "header">
-  
+      <div className="header">
+      <Menu style={{marginLeft:"90%"}}>
+    <Dropdown text='User'  simple item>
+      <Dropdown.Menu>
+        <Dropdown.Item>User Profile</Dropdown.Item>
+        <Dropdown.Item>Post</Dropdown.Item>
+        
+        <Dropdown.Item>User Feed</Dropdown.Item>
+        <Dropdown.Divider />  
+        <Dropdown.Item>Log Out</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  </Menu>
       </div>
     </Header>
-    
-)
+
+  )
 
   render() {
-    // To display the Header And the class LoginForm 
+
     return (
-      // className="container"
-      
-        <div >
-          <this.HeaderExampleAttached/>
-        </div>
-        
-      
-      // creating a class that will render either the class LoginForm or SignUp
+      <div >
+        <this.HeaderExampleAttached />
+      </div>
+
     )
   }
 }

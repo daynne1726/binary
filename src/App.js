@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import Side from './components/Side';
 class App extends Component {
   render() {
     return (
@@ -16,6 +17,7 @@ class App extends Component {
             <Route exact path='/userfeed' component={UserFeed} />
             <Route exact path='/signup' component={SignUp} />
             <Route exact path='/login' component={LoginForm} />
+            <Route exact path='/sidebar' component={Side} />
             <Redirect from ="/" to ="/login"> </Redirect>
           </Switch>
         </Router>
