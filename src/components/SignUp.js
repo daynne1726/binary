@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../App.css'
-import { Button, Form, Grid } from 'semantic-ui-react'
+import { Button, Form, Grid,  } from 'semantic-ui-react'
 import LoginForm from './LoginForm';
 import Header from './Header'
 import req from "./helper";
@@ -24,8 +24,8 @@ class SignUp extends Component {
 
   onSubmit = () => {
     const newUser = {
-      fname: this.state.fname,
-      lname: this.state.lname,
+      firstName: this.state.fname,
+      lastName: this.state.lname,
       gender: this.state.gender,
       username: this.state.username,
       email: this.state.email,
@@ -58,6 +58,7 @@ class SignUp extends Component {
 
   }
   SignUpForm = () => (
+    
     <Grid.Column>
       <Form>
         <Form.Input
@@ -124,6 +125,7 @@ class SignUp extends Component {
         <Link to={"/login"}><Button content='Sign Up' onClick={this.onSubmit} primary /></Link>
       </Form>
     </Grid.Column>
+    
   )
 
   render() {
