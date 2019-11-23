@@ -3,60 +3,63 @@ import '../App.css'
 import { Button, Form, Grid } from 'semantic-ui-react'
 import LoginForm from './LoginForm';
 import Header from './Header'
-import {addUser} from "./helper";
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import req from "./helper";
+import { BrowserRouter as Router, Switch, Redirect, Link } from 'react-router-dom';
 
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fname: "an",
-      lname: 'an',
-      gender: 'an',
-      email: 'an',
-      username: 'an',
-      password: 'an',
-      verifypass: '',
+      fname: "sdf",
+      lname: 'sdf',
+      gender: 'fdg',
+      email: 'sdf',
+      username: 'sdf',
+      password: 'dfg',
+      verifypass: 'df',
       sign: false,
-      signUpError: '',
-      signInError: '',
-
     }
   }
 
-  onSubmit = event => {
-    event.preventDefault();
+  onSubmit = () => {
     const newUser = {
-      firstName: this.state.fname,
-      lastName: this.state.lname,
+      fname: this.state.fname,
+      lname: this.state.lname,
       gender: this.state.gender,
-      userName: this.state.username,
+      username: this.state.username,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      signUpDate: new Date()
     };
-    addUser(newUser).then(response => {
-      console.log("New user added", response.data );
-      // this.$emit('addUser', response.data);
-      this.setState({ fname: "",username: "", lname: '', gender: '',email: '',password: ''});
-    })
-    .catch(err => alert(err.error))
+    req
+      .addUser(newUser)
+      // console.log(newUser)
+      .then(resp => {
+        console.log(resp);
+        if (resp.status) {
+          this.setState({ sign: true });
+        }
+      })
+      .catch(err => {
+        alert("All field must be required!!!")
+
+      });
   };
 
-  signupHandler = (e)=>{
+  signupHandler = (e) => {
     e.preventDefault();
-    const {password , verifypass}=this.state
-    if(password === verifypass){
-      this.setState({sign:true})
-    }else{
-      this.setState({sign:false})
+    const { password, verifypass } = this.state
+    if (password === verifypass) {
+      this.setState({ sign: true })
+    } else {
+      this.setState({ sign: false })
     }
 
   }
-
   SignUpForm = () => (
     <Grid.Column>
-      <Form onSubmit = {this.onSubmit}>
+      <Form>
         <Form.Input
           icon='user'
           iconPosition='left'
@@ -109,77 +112,45 @@ class SignUp extends Component {
           onChange={e => this.setState({ password: e.target.value })}
           required
         />
-        <Form.Input
+        {/* <Form.Input
           icon='lock'
           iconPosition='left'
           label='Verify Password'
           type='password'
-         
+
           onChange={e => this.setState({ verifypass: e.target.value })}
           required
-        />
+        /> */}
         <Link to={"/login"}><Button content='Sign Up' onClick={this.onSubmit} primary /></Link>
       </Form>
     </Grid.Column>
   )
 
-  // SignUpHandler = (e) => {
-  //   const { password, verifypass } = this.state;
-  //   if (password === verifypass) {
-  //     swal("Welcome!", "You are already signed in!", "success");
-  //     this.setState({ sign: true })
-
-  //     console.log(this.state.sign)
-  //   }
-  //   else {
-  //     swal("Oops!", "Password did not match!", "error");
-  //   }
-  // }
-
   render() {
     const {
-      token,
       sign,
-      signUpError,
     } = this.state;
-    if (!sign) {
-      if (!token) {
-        return (
-          <div className="container">
-            <Header />
-            <div className="boxsign">
-              {
-                (signUpError) ? (
-                  <p>{signUpError}</p>
-                ) : (null)
-              }
-              <this.SignUpForm />
-              {this.state.email}
-            </div>
-          </div>
-        );
-      }
-    }
-    // const { sign } = this.state
-    // if (!sign) {
-    //   return (
-    //     <div className="container"> 
-
-    //       <div className="boxsign">
-    //         <this.SignUpForm />
-    //       </div>
-    //     </div>
-    //   )
-    // }
-    else {
+    if (sign === true) {
       return (
         <Router>
           <Switch>
-            <Route exact path='/login' component={LoginForm} />
+            <Redirect to="/login" />
           </Switch>
         </Router>
       )
     }
+    return (
+      <div className="container">
+        <Header />
+        <div className="boxsign">
+          <this.SignUpForm />
+          {this.state.email}
+          {this.state.gender}
+        </div>
+      </div>
+    );
   }
+
+
 }
 export default SignUp;

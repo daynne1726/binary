@@ -8,7 +8,6 @@ const insert = require("./controller/insert");
 const verify = require("./controller/verify");
 const user = require("./models/User");
 
-
 const PORT = process.env.PORT || 4000;
 //middleware
 app.use(cors());
@@ -46,80 +45,20 @@ app.get("/user/retrieve", (req, res) => {
     });
 });
 
-app.post('/user/signup', (req, res, next) => {
-    console.log("signup")
-    const { body } = req;
-    const { password } = body.password;
-    let { email } = body.email;
-
-    if (!email) {
-        return res.send({
-            success: false,
-            message: 'Error: Email cannot be blank.'
-        });
-    }
-    if (!password) {
-        return res.send({
-            success: false,
-            message: 'Error: Password cannot be blank.'
-        });
-    }
-    email = email.toLowerCase();
-    email = email.trim();
-    // Steps:
-    // 1. Verify email doesn't exist
-    // 2. Save
-    user.find({
-        email: email
-    }, (err, previousUsers) => {
-        if (err) {
-            return res.send({
-                success: false,
-                message: 'Error: Server error'
-            });
-        } else if (previousUsers.length > 0) {
-            return res.send({
-                success: false,
-                message: 'Error: Account already exist.'
-            });
-        }
-        //     // Save the new user
-        const newUser = new user({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            gender: req.body.gender,
-            userName: req.body.userName,
-            email: req.body.email,
-            password: password,
-        });
-        newUser
-            .save()
-            .then(() => {
-                console.log("New user added to database", newUser);
-                res.json(newUser)
-            })
-            .catch(error => {
-                console.log("Error: ", error);
-                res.status(400).json({ message: error });
-            });
-        });
-    }); // end of sign up endpoint
-
-
 app.post("/user/create", (req, res) => {
-    const data = new user({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        gender: req.body.gender,
-        userName: req.body.userName,
-        email: req.body.email,
-        password: req.body.password,
-    });
-    data.save(err => {
+    console.log("test");
+    try {
+      const data = new user(req.body);
+      data.save((err, dbres) => {
         if (err) return res.status(404).send({ message: err.message });
-        return res.send({ data });
-    });
-});
+        console.log(dbres);
+        return res.send({ info: dbres, status: true });
+      });
+    } catch (err) {
+      res.send({ message: err.message });
+    }
+  });
+  
 app.post("/user/update/:id", (req, res) => {
     console.log(req.body);
     user.findByIdAndUpdate(
@@ -138,3 +77,76 @@ app.post('/user/delete/:id', (req, res) => {
         return res.send({ message: 'Service is successfully deleted!', data })
     })
 })
+    // app.post('/user/signup', (req, res, next) => {
+    //     console.log("signup")
+    //     const { body } = req;
+    //     const { password } = body.password;
+    //     let { email } = body.email;
+    
+    //     if (!email) {
+    //         return res.send({
+    //             success: false,
+    //             message: 'Error: Email cannot be blank.'
+    //         });
+    //     }
+    //     if (!password) {
+    //         return res.send({
+    //             success: false,
+    //             message: 'Error: Password cannot be blank.'
+    //         });
+    //     }
+    //     email = email.toLowerCase();
+    //     email = email.trim();
+    //     // Steps:
+    //     // 1. Verify email doesn't exist
+    //     // 2. Save
+    //     user.find({
+    //         email: email
+    //     }, (err, previousUsers) => {
+    //         if (err) {
+    //             return res.send({
+    //                 success: false,
+    //                 message: 'Error: Server error'
+    //             });
+    //         } else if (previousUsers.length > 0) {
+    //             return res.send({
+    //                 success: false,
+    //                 message: 'Error: Account already exist.'
+    //             });
+    //         }
+    //         //     // Save the new user
+    //         const newUser = new user({
+    //             firstName: req.body.firstName,
+    //             lastName: req.body.lastName,
+    //             gender: req.body.gender,
+    //             userName: req.body.userName,
+    //             email: req.body.email,
+    //             password: password,
+    //         });
+    //         newUser
+    //             .save()
+    //             .then(() => {
+    //                 console.log("New user added to database", newUser);
+    //                 res.json(newUser)
+    //             })
+    //             .catch(error => {
+    //                 console.log("Error: ", error);
+    //                 res.status(400).json({ message: error });
+    //             });
+    //         });
+    //     }); // end of sign up endpoint
+
+    // app.post("/user/create", (req, res) => {
+//     const data = new user({
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         gender: req.body.gender,
+//         userName: req.body.userName,
+//         email: req.body.email,
+//         password: req.body.password,
+//     });
+//     data.save(err => {
+//         if (err) return res.status(404).send({ message: err.message });
+//         return res.send({ data });
+//     });
+// });
