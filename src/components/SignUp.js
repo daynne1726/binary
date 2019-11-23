@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import '../App.css'
-import { Button, Form, Grid,  } from 'semantic-ui-react'
-import LoginForm from './LoginForm';
-import Header from './Header'
+import { Button, Form, Grid, } from 'semantic-ui-react'
 import req from "./helper";
 import { BrowserRouter as Router, Switch, Redirect, Link } from 'react-router-dom';
 
@@ -36,7 +34,7 @@ class SignUp extends Component {
       .addUser(newUser)
       // console.log(newUser)
       .then(resp => {
-        console.log(resp);
+        console.log(resp);  
         if (resp.status) {
           this.setState({ sign: true });
         }
@@ -58,7 +56,7 @@ class SignUp extends Component {
 
   }
   SignUpForm = () => (
-    
+
     <Grid.Column>
       <Form>
         <Form.Input
@@ -81,6 +79,7 @@ class SignUp extends Component {
         />
         <label><b>Gender</b>
           <select onChange={e => this.setState({ gender: e.target.value })}>
+            <option value=""></option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
@@ -118,14 +117,14 @@ class SignUp extends Component {
           iconPosition='left'
           label='Verify Password'
           type='password'
-
+          value={this.state.verifypass}
           onChange={e => this.setState({ verifypass: e.target.value })}
           required
         /> */}
         <Link to={"/login"}><Button content='Sign Up' onClick={this.onSubmit} primary /></Link>
       </Form>
     </Grid.Column>
-    
+
   )
 
   render() {
@@ -140,18 +139,19 @@ class SignUp extends Component {
           </Switch>
         </Router>
       )
-    }
-    return (
-      <div className="container">
-        <Header />
-        <div className="boxsign">
-          <this.SignUpForm />
-          {this.state.email}
-          {this.state.gender}
+    } else {
+      return (
+        <div className="container">
+          <div className="boxsign">
+            <this.SignUpForm />
+            {/* {this.state.email}
+            {this.state.gender} */}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
+
 
 
 }

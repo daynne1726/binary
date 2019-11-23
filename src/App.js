@@ -4,6 +4,9 @@ import LoginForm from './components/LoginForm';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import UserFeed from './components/UserFeed';
 import SignUp from './components/SignUp';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 class App extends Component {
   render() {
     return (

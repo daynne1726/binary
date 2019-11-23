@@ -2,20 +2,28 @@ import React, { Component } from 'react'
 import '../App.css'
 import { Button, } from 'semantic-ui-react'
 import { BrowserRouter as Link } from 'react-router-dom';
+import { Header, Segment } from 'semantic-ui-react'
 
-class Header extends Component {
+
+class HeaderMain extends Component {
+
+
+HeaderExampleAttached = () => (
+    <Header as='h2' attached='top'>
+      <div className = "header">
+  
+      </div>
+    </Header>
+    
+)
+
   render() {
     // To display the Header And the class LoginForm 
     return (
       // className="container"
       
-        <div className="header">
-          <nav>
-            {/* adding the image logo */}
-            <img className="logo" alt="joke" src={require('../photos/logo.png')} />
-            <Link to={'/'}><Button color='red' >Log In</Button></Link>
-            <Link to={'/signup'} ><Button color='blue' >Sign Up</Button></Link>
-          </nav>
+        <div >
+          <this.HeaderExampleAttached/>
         </div>
         
       
@@ -23,4 +31,4 @@ class Header extends Component {
     )
   }
 }
-export default Header
+export default HeaderMain

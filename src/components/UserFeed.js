@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Card, Image } from 'semantic-ui-react'
+import HeaderMain from './Header'
+
 
 class UserFeed extends Component {
 
@@ -86,7 +88,9 @@ CardExampleGroups = () => (
     render() {
         return (
             <div className="containeruser">
+            <HeaderMain/>
                 <this.CardExampleGroups/>
+            
             </div>
         )
     }
