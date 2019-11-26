@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import '../App.css'
 import { Button, Header } from 'semantic-ui-react'
 import { Dropdown, Menu } from 'semantic-ui-react'
-import { BrowserRouter as Link } from 'react-router-dom';
+import { BrowserRouter as Link,Route,Router,Switch } from 'react-router-dom';
+import Profile from './Profile';
 
 
 
@@ -23,7 +24,7 @@ class HeaderMain extends Component {
       <Menu style={{marginLeft:"90%"}}>
     <Dropdown text='User'  simple item>
       <Dropdown.Menu>
-        <Dropdown.Item>User Profile</Dropdown.Item>
+      <Link to={"/profile"}><Dropdown.Item><Button>User Profile</Button></Dropdown.Item></Link>
         <Dropdown.Item>Post</Dropdown.Item>
         
         <Dropdown.Item>User Feed</Dropdown.Item>

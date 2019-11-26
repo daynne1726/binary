@@ -6,7 +6,7 @@ import HeaderMain from './Header'
 class UserFeed extends Component {
 
 CardExampleGroups = () => (
-  <Card.Group>
+  <Card.Group style={{marginLeft:'5%',marginRight:'3%'}}>
     <Card>
       <Card.Content>
         <Image
@@ -79,6 +79,80 @@ CardExampleGroups = () => (
         </div>
       </Card.Content>
     </Card>
+    <Card>
+      <Card.Content>
+        <Image
+          floated='right'
+          size='mini'
+          src='/images/avatar/large/jenny.jpg'
+        />
+        <Card.Header>Jenny Lawrence</Card.Header>
+        <Card.Meta>New User</Card.Meta>
+        <Card.Description>
+          Jenny requested permission to view your contact details
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <div className='ui two buttons'>
+          <Button basic color='green'>
+            Approve
+          </Button>
+          <Button basic color='red'>
+            Decline
+          </Button>
+        </div>
+      </Card.Content>
+    </Card>
+    <br></br><br></br>
+    <Card>
+      <Card.Content>
+        <Image
+          floated='right'
+          size='mini'
+          src='/images/avatar/large/jenny.jpg'
+        />
+        <Card.Header>Jenny Lawrence</Card.Header>
+        <Card.Meta>New User</Card.Meta>
+        <Card.Description>
+          Jenny requested permission to view your contact details
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <div className='ui two buttons'>
+          <Button basic color='green'>
+            Approve
+          </Button>
+          <Button basic color='red'>
+            Decline
+          </Button>
+        </div>
+      </Card.Content>
+    </Card>
+    <Card>
+      <Card.Content>
+        <Image
+          floated='right'
+          size='mini'
+          src='/images/avatar/large/jenny.jpg'
+        />
+        <Card.Header>Jenny Lawrence</Card.Header>
+        <Card.Meta>New User</Card.Meta>
+        <Card.Description>
+          Jenny requested permission to view your contact details
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <div className='ui two buttons'>
+          <Button basic color='green'>
+            Approve
+          </Button>
+          <Button basic color='red'>
+            Decline
+          </Button>
+        </div>
+      </Card.Content>
+    </Card>
+    
   </Card.Group>
 )
 
