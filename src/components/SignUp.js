@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { Button, Form, Grid, } from 'semantic-ui-react'
-import req from "./helper";
-import { BrowserRouter as Router, Switch, Redirect, Link } from 'react-router-dom';
 
+import { BrowserRouter as Router, Switch, Redirect, Link } from 'react-router-dom';
+import req from "./helper";
 
 class SignUp extends Component {
   constructor(props) {

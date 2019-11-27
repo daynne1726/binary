@@ -1,19 +1,30 @@
 import React, { Component } from 'react'
 import '../App.css'
-import { Button, Form, Grid, Card} from 'semantic-ui-react'
+import { Button, Form, Grid, Card } from 'semantic-ui-react'
 import req from "./helper";
 import { BrowserRouter as Router, Switch, Redirect, Link } from 'react-router-dom';
-
-
+import 'whatwg-fetch';
+import { setInStorage, getFromStorage, } from './storage';
+import UserFeed from './UserFeed'
 class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       email: '',
       password: '',
+      token: '',
+      signInError: '',
       // for Log in,,, partial hard code
       login: false
+
     }
+    this.onSignIn = this.onSignIn.bind(this);
+  }
+  componentDidMount() {
+    this.setState({
+      isLoading: false
+    });
   }
   onSubmit = () => {
     const newUser = {
@@ -24,7 +35,7 @@ class LoginForm extends Component {
       .login(newUser)
       // console.log(newUser)
       .then(resp => {
-        console.log(resp);  
+        console.log(resp);
         if (resp.status) {
           this.setState({ login: true });
         }
@@ -35,8 +46,69 @@ class LoginForm extends Component {
       });
   };
 
+
+  onSignIn() {
+    // Grab state
+    const signin ={
+      email: this.state.email,
+      password: this.state.password,
+    };
+    this.setState({
+      isLoading: true,
+    });
+    req
+      .login(signin)
+    // Post request to backend
+      .then(res => res.json())
+      .then(json => {
+        console.log('json', json);
+        if (json.success) {
+          setInStorage('the_main_app', { token: json.token });
+          this.setState({ login: true })
+          this.setState({
+            signInError: json.message,
+            isLoading: false,
+            password: '',
+            email: '',
+            token: json.token,
+          });
+        } else {
+          this.setState({
+            signInError: json.message,
+            isLoading: false,
+          });
+        }
+      });
+  }
+
+  componentDidMount() {
+    const obj = getFromStorage('the_main_app');
+    if (obj && obj.token) {
+      const { token } = obj;
+      // Verify token
+      fetch('/user/verify?token=' + token)
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            this.setState({
+              token,
+              isLoading: false
+            });
+          } else {
+            this.setState({
+              isLoading: false,
+            });
+          }
+        });
+    } else {
+      this.setState({
+        isLoading: false,
+      });
+    }
+  }
+
   LoginForm = () => (
-    
+
     <Card.Group>
       <Grid.Column>
         <Form>
@@ -44,23 +116,23 @@ class LoginForm extends Component {
             icon='user'
             iconPosition='left'
             label='Username/Email'
-            value = {this.state.username}
-            onChange={e => this.setState({ username: e.target.value })}
+            value={this.state.email}
+            onChange={e => this.setState({ email: e.target.value })}
           />
           <Form.Input
             icon='lock'
             iconPosition='left'
             label='Password'
             type='password'
-            value = {this.state.password}
+            value={this.state.password}
             onChange={e => this.setState({ password: e.target.value })}
           />
-          <Link to={'/userfeed'}><Button content='Login' onClick={e => this.onSubmit(e)} primary /></Link>
+          <Button content='Login' onClick={this.onSignIn} primary />
           <Link to={'/signup'} ><Button color='blue' >Sign Up</Button></Link>
         </Form>
       </Grid.Column>
     </Card.Group>
-  
+
   )
   LoginHandler = (e) => {
     const { username, password, pass, uname } = this.state;
@@ -74,24 +146,28 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { login } = this.state;
-    if (login === true) {
-      return (
-        <Router>
-          <Switch>
-            <Redirect to="/signup" />
-          </Switch>
-        </Router>
-        
-      )
+    const { login, isLoading, token,signInError } = this.state;
+    if (isLoading) {
+      return (<div><p>Loading...</p></div>);
     }
-    else {
+    if (!token) {
       return (
         <div className="container">
-          <div className = "box">
-          <this.LoginForm />
+          <div className="box">
+            {
+              (signInError) ? (
+                <p>{signInError}</p>
+              ) : (null)
+            }
+            <this.LoginForm />
           </div>
         </div>
+      );
+    }
+    else if (login === true) {
+      return (
+        <UserFeed/>
+
       )
     }
   }
