@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../App.css'
 import { Button, Form, Grid, Card, Container } from 'semantic-ui-react'
 import req from "./helper";
-import { BrowserRouter as Router, Switch, Redirect, Link } from 'react-router-dom';
+import { BrowserRouter as Link } from 'react-router-dom';
 import 'whatwg-fetch';
 import { setInStorage, getFromStorage, } from './storage';
 import UserFeed from './UserFeed'

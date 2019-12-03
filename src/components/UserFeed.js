@@ -1,86 +1,53 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import AppBar from './frame/AppBar'
-
-const useStyles = makeStyles(theme => ({
-  card: {
-      maxWidth: 345,
-      backgroundColor: "pink",
-      marginLeft: "10px",
-      marginTop: "10px"
-  },
-  card1: {
-      maxWidth: 345,
-      backgroundColor: "pink",
-      marginLeft: "10px",
-
-  },
-  card2: {
-      maxWidth: 345,
-      backgroundColor: "pink",
-      marginLeft: "10px",
-
-  },
-  container1: {
-      height: 300,
-      backgroundColor: "Black",
-      marginBottom: "50px",
-      
-  },
-  media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.shortest,
-      }),
-  },
-  expandOpen: {
-      transform: 'rotate(180deg)',
-  },
-  avatar: {
-      backgroundColor: red[500],
-  },
-}));
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 
 class UserFeed extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+        setOpen: false,
+        open: false
+      };
   }
+
+  handleOpen = () => {
+    this.setState({setOpen: true})
+  };
+
+  handleClose = () => {
+    this.setState({setOpen: false})
+  };
+
+  
 
 CardExampleGroups = () => (
   <div>
             
-  <Container style={{ height: 300,
+  <Container style={{ height: 400,
+    marginTop:"70px",
       backgroundColor: "Black",
-      marginBottom: "50px", }}>
+      marginBottom: "50px",}}>
 
   </Container>
   <Grid container spacing={3}>
 <Grid item xs={12} sm={4}>
-  <Card style={{ maxWidth: 345,
+  <Card style={{ maxWidth: 400,
       backgroundColor: "pink",
       marginLeft: "10px",
       marginTop: "10px" }}>
@@ -99,9 +66,12 @@ CardExampleGroups = () => (
           subheader="September 14, 2016"
       />
       <CardMedia
-          className={useStyles.media}
+          style ={{ height: 0,
+            paddingTop: '56.25%',
+        }}
           image="photos/images.jpg"
           title="Paella dish"
+          
       />
 
       <CardContent>
@@ -117,6 +87,9 @@ CardExampleGroups = () => (
           <IconButton aria-label="share">
               <ShareIcon />
           </IconButton>
+          <IconButton aria-label="share">
+              <ArrowDropDownIcon onClick = {this.handleOpen}/>
+          </IconButton>
          
       </CardActions>
       
@@ -124,13 +97,13 @@ CardExampleGroups = () => (
 
   </Grid>
   <Grid item xs={12} sm={4}>
-  <Card style={{ maxWidth: 345,
+  <Card style={{ maxWidth: 400,
       backgroundColor: "pink",
       marginLeft: "10px",
       marginTop: "10px" }}>
       <CardHeader
           avatar={
-              <Avatar aria-label="recipe" className={useStyles.avatar}>
+              <Avatar aria-label="recipe" style={{ backgroundColor: red[500]}}>
                   M
                                   </Avatar>
           }
@@ -143,7 +116,9 @@ CardExampleGroups = () => (
           subheader="September 14, 2016"
       />
       <CardMedia
-          className={useStyles.media}
+          style ={{ height: 0,
+            paddingTop: '56.25%',
+        }}
           image="photos/images.jpg"
           title="Paella dish"
       />
@@ -167,13 +142,13 @@ CardExampleGroups = () => (
   </Card>
 </Grid>
 <Grid item xs={12} sm={4}>
-<Card style={{ maxWidth: 345,
+<Card style={{ maxWidth: 400,
       backgroundColor: "pink",
       marginLeft: "10px",
       marginTop: "10px" }}>
       <CardHeader
           avatar={
-              <Avatar aria-label="recipe" className={useStyles.avatar}>
+              <Avatar aria-label="recipe" style={{ backgroundColor: red[500]}}>
                   A
                                   </Avatar>
           }
@@ -186,8 +161,10 @@ CardExampleGroups = () => (
           subheader="September 14, 2016"
       />
       <CardMedia
-          className={useStyles.media}
-          image="photos/images.jpg"
+          style ={{ height: 0,
+            paddingTop: '56.25%',
+        }}
+          image="/src/photos/images.jpg"
           title="Paella dish"
       />
 
@@ -209,13 +186,13 @@ CardExampleGroups = () => (
   </Card>
 </Grid>
 <Grid item xs={12} sm={4}>
-<Card style={{ maxWidth: 345,
+<Card style={{ maxWidth: 400,
       backgroundColor: "pink",
       marginLeft: "10px",
       marginTop: "10px" }}>
       <CardHeader
           avatar={
-              <Avatar aria-label="recipe" className={useStyles.avatar}>
+              <Avatar aria-label="recipe" style={{ backgroundColor: red[500]}}>
                   Y
                                   </Avatar>
           }
@@ -228,7 +205,9 @@ CardExampleGroups = () => (
           subheader="September 14, 2016"
       />
       <CardMedia
-          className={useStyles.media}
+          style ={{ height: 0,
+            paddingTop: '56.25%',
+        }}
           image="photos/images.jpg"
           title="Paella dish"
       />
@@ -253,13 +232,13 @@ CardExampleGroups = () => (
 
   </Grid>
   <Grid item xs={12} sm={4}>
-  <Card style={{ maxWidth: 345,
+  <Card style={{ maxWidth: 400,
       backgroundColor: "pink",
       marginLeft: "10px",
       marginTop: "10px" }}>
       <CardHeader
           avatar={
-              <Avatar aria-label="recipe" className={useStyles.avatar}>
+              <Avatar aria-label="recipe" style={{ backgroundColor: red[500]}}>
                   M
                                   </Avatar>
           }
@@ -272,7 +251,9 @@ CardExampleGroups = () => (
           subheader="September 14, 2016"
       />
       <CardMedia
-          className={useStyles.media}
+          style ={{ height: 0,
+            paddingTop: '56.25%',
+        }}
           image="photos/images.jpg"
           title="Paella dish"
       />
@@ -296,13 +277,13 @@ CardExampleGroups = () => (
   </Card>
 </Grid>
 <Grid item xs={12} sm={4}>
-<Card style={{ maxWidth: 345,
+<Card style={{ maxWidth: 400,
       backgroundColor: "pink",
       marginLeft: "10px",
       marginTop: "10px" }}>
       <CardHeader
           avatar={
-              <Avatar aria-label="recipe" className={useStyles.avatar}>
+              <Avatar aria-label="recipe" style={{ backgroundColor: red[500]}}>
                   A
                                   </Avatar>
           }
@@ -315,7 +296,9 @@ CardExampleGroups = () => (
           subheader="September 14, 2016"
       />
       <CardMedia
-          className={useStyles.media}
+          style ={{ height: 0,
+            paddingTop: '56.25%',
+        }}
           image="photos/images.jpg"
           title="Paella dish"
       />
